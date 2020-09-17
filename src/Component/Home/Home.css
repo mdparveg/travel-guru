@@ -1,0 +1,37 @@
+.home{
+
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0, 0.6)),
+    url('../Resource/Image/cox.png') no-repeat;
+    width: 100%;
+    height: 800px;
+    position: absolute;
+}
+.card{
+    border: 3px solid #FBBC04;
+    border-radius: 20px;
+    height: 300px;
+    padding: 1px;
+    width: 300px;
+    margin: 5px;
+}
+.card h1,h2{
+    text-align: center;
+    position: relative;
+    top: 60px;
+    font-size: 20px;
+}
+.cox{
+    background-image: url(../Resource/Image/cox.png);
+    background-size: cover;
+}
+.srimangal{
+    background-image: url(../Resource/Image/Sreemongol.png);
+    background-size: cover;
+}
+.sundorbon{
+    background-image: url(../Resource/Image/sundorbon.png);
+    background-size: cover;
+}
+.body{
+    color: white;
+}

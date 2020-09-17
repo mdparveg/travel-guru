@@ -1,0 +1,24 @@
+.home{
+
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0, 0.6)),
+    url('../Resource/Image/cox.png') no-repeat;
+    width: 100%;
+    height: 800px;
+    position: absolute;
+}
+.container{
+    position: relative;
+    top: 100px;
+}
+.header{
+    color: white;
+    font-size: 75px;
+}
+.article{
+    color: white;
+}
+.form{
+    width: 100%;
+    background-color: white;
+    padding: 30px;
+}
