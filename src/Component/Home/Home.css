@@ -17,20 +17,16 @@
 .card h1,h2{
     text-align: center;
     position: relative;
-    top: 60px;
+    top: 220px;
     font-size: 20px;
 }
 .cox{
     background-image: url(../Resource/Image/cox.png);
     background-size: cover;
 }
-.srimangal{
-    background-image: url(../Resource/Image/Sreemongol.png);
-    background-size: cover;
-}
-.sundorbon{
-    background-image: url(../Resource/Image/sundorbon.png);
-    background-size: cover;
+.place{
+    font-size: 20px;
+    color: white;
 }
 .body{
     color: white;

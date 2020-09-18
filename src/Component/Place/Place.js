@@ -16,7 +16,7 @@ const Place = () => {
 
 
     return (
-        <div className="home">
+        <div className="body">
             <div className="row container">
                 <div className="col-md-6">
                     <h1 className="header">{data.name}</h1>
@@ -24,21 +24,21 @@ const Place = () => {
                 </div>
                 <div className="col-md-6">
                     <form className="form" action="">
-                        <label htmlFor="">Origin</label>
+                        <label className="color" htmlFor="">Origin</label>
                         <Form.Control value={spot} onChange={(e)=> setSpot(e.target.value)} required type="text" />
                         <br />
-                        <label htmlFor="">Destination</label>
+                        <label className="color" htmlFor="">Destination</label>
                         <br />
-                        <input placeholder="select your destination" className="form-control" type="text" required />
+                        <input value={data.name} className="form-control" type="text" required />
                         <br />
                         <div className="row">
                             <div className="col-md-6">
-                                <label htmlFor="">From</label>
+                                <label className="color" htmlFor="">From</label>
                                 <br />
                                 <input required type="date" />
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="">To</label>
+                                <label className="color" htmlFor="">To</label>
                                 <br />
                                 <input required type="date" />
                             </div>

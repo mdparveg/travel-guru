@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -8,9 +8,16 @@ import Login from './Component/Login/Login';
 import Place from './Component/Place/Place';
 import Notfound from './Component/NotFound/Notfound';
 import PlaceDetails from './Component/PlaceDetails/PlaceDetails';
+import PrivateRoute from './Component/PrivateRoute/PrivateRoute';
+
+
+  export const UserContext = createContext();
+
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({});
   return (
+    <UserContext.Provider value = {[loggedInUser, setLoggedInUser]} >
     <Router>
       <Navbar></Navbar>
       <Switch>
@@ -23,9 +30,9 @@ function App() {
         <Route path='/place/:id'>
           <Place></Place>
         </Route>
-        <Route path='/hotel/:id'>
+        <PrivateRoute path='/hotel/:id'>
           <PlaceDetails></PlaceDetails>
-        </Route>
+        </PrivateRoute>
         <Route path='/login'>
           <Login></Login>
         </Route>
@@ -34,6 +41,7 @@ function App() {
         </Route>
       </Switch>
     </Router>
+    </UserContext.Provider>
   );
 }
 

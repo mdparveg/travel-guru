@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './Firebase.config';
+import { UserContext } from '../../App';
+import { useHistory, useLocation } from 'react-router-dom';
+import './Login.css'
 
 
 
-firebase.initializeApp(firebaseConfig);
 const Login = () => {
+    if(firebase.apps.length === 0){
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    let history = useHistory();
+    let location = useLocation();
+    const { from } = location.state || { from: { pathname: "/" } };
+
+   
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const [newUser, setNewUser] = useState(false)
     const [user, setUser] = useState({
         isSignedIn: false,
@@ -29,31 +41,23 @@ const Login = () => {
                     name: displayName,
                     email: email
                 }
-                setUser(signedInUser)
+                setUser(signedInUser);
+                setLoggedInUser(signedInUser);
+                history.replace(from);
             })
-            .catch(err => {
-                console.log(err);
-                console.log(err.messege);
-            })
+            .catch(err => (err))
     }
 
     const fbSignIn = () => {
         firebase.auth().signInWithPopup(fbProvider)
         .then(function(result) {
             var token = result.credential.accessToken;
-            // The signed-in user info.
             var user = result.user;
-            console.log("fb user" , user);
-            // ...
           }).catch(function(error) {
-            // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            // The email of the user's account used.
             var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
             var credential = error.credential;
-            // ...
           });
     }
 
@@ -70,7 +74,7 @@ const Login = () => {
                 }
                 setUser(signedOutUser)
             })
-            .catch(err => console.log(err))
+            .catch(err => (err))
     }
 
     const handleBlur = (e) => {
@@ -98,15 +102,12 @@ const Login = () => {
                     newUserInfo.success = true;
                     setUser(newUserInfo);
                     updateUserName(user.name)
-                    console.log(res);
                 })
                 .catch(error => {
                     const newUserInfo = { ...user }
                     newUserInfo.error = error.message;
                     newUserInfo.success = true;
                     setUser(newUserInfo)
-                    console.log(error.code, error.message);
-                    // ...
                 });
         }
 
@@ -117,19 +118,16 @@ const Login = () => {
                 newUserInfo.error = '';
                 newUserInfo.success = true;
                 setUser(newUserInfo);
-                console.log("sign in userInfo" , res.user);
-                console.log(res);
+                setLoggedInUser(newUserInfo);
+                history.replace(from);
             })
             .catch(function(error) {
                 const newUserInfo = { ...user }
                 newUserInfo.error = error.message;
                 newUserInfo.success = true;
                 setUser(newUserInfo)
-                // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.log(error.code, error.message);
-                // ...
               });
         }
         e.preventDefault();
@@ -142,9 +140,7 @@ const Login = () => {
           displayName: name
         })
         .then(function() {
-          console.log('user update');
         }).catch(function(error) {
-          console.log(error);
         });
     }
 
@@ -152,8 +148,8 @@ const Login = () => {
         <div className="container">
             <div className="row">
                 <div className="col-md-3"></div>
-                <div className="col-md-6">
-                    <form onSubmit={handleSubmit} action="">
+                <div className="col-md-6 login_form">
+                    <form className="login" onSubmit={handleSubmit} action="">
                         <h1>Login</h1>
                         {newUser && <input type="text" onBlur={handleBlur}  required placeholder="write your First name" name="name" />}
                         <br />
@@ -171,11 +167,11 @@ const Login = () => {
                     <label htmlFor="newUser">Create an account</label>
                     <p style={{ color: 'red' }}>{user.error}</p>
                     {
-                        user.success && <p style={{ color: 'green' }}>User  {newUser ?'Created' : 'Logged In'} Successfully</p>
+                         user.success && <p style={{ color: 'green' }}>User {newUser ? 'Created' : 'logged in'} Successfully</p>
                     }
-                    <button onClick={fbSignIn}>Continue With Facebook</button>
+                    <button className="btn btn-warning sign" onClick={fbSignIn}>Continue With Facebook</button>
                     <br />
-                    {user.isSignedIn ? <button onClick={googleSigOut}>Sign Out from Google</button> : <button onClick={googleSignIn}>Continue with Google</button>
+                    {user.isSignedIn ? <button className="btn btn-warning sign" onClick={googleSigOut}>Sign Out from Google</button> : <button className="btn btn-warning sign" onClick={googleSignIn}>Continue with Google</button>
 
                     }
                     {

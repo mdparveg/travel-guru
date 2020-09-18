@@ -26,7 +26,7 @@ const Home = () => {
                             return (
                                 <Link to={`/place/${place.id}`} > <div className="card cox" style={{ width: '18rm' }}>
 
-                                <h1>{place.name}</h1>
+                                <h1 className="place">{place.name}</h1>
                               </div></Link>
                             )
                         })
